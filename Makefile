@@ -7,7 +7,7 @@ install-dev: venv upgrade_pip
 	.venv/bin/pip install -r requirements.dev.txt
 
 upgrade_pip:
-	@if [ -d .venv/]; then\
+	@if [ -d .venv ]; then\
 		echo "[-] Upgrading pip";\
 		.venv/bin/pip install --upgrade pip;\
 	else\
