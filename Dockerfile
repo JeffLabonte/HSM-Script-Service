@@ -3,10 +3,12 @@ LABEL maintainer="Jeff Labonte <grimsleepless@protonmail.com>"
 
 WORKDIR /opt
 
-COPY src/ /opt/
-COPY requirements.txt /opt/
 COPY docker-entrypoint.sh /opt/
 
+COPY requirements.txt /opt/
 RUN pip install -r requirements.txt
+
+COPY src/ /opt/src/
+
 
 ENTRYPOINT [ "./docker-entrypoint.sh" ]
