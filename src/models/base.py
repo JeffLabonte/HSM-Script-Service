@@ -18,7 +18,7 @@ sqlite_mutex = Lock()
 
 
 @contextmanager
-def get_session(auto_commit: bool = True) -> Session:
+def get_session(auto_commit: bool = True):
     with sqlite_mutex:
         session = SessionFactory()
         try:
