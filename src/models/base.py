@@ -3,7 +3,6 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 
 from contextlib import contextmanager
-from functools import wraps
 from threading import Lock
 
 
