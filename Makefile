@@ -22,4 +22,5 @@ venv:
 		echo "[-] venv already exists";\
 	fi
 
-
+unit_test:
+	cd src/ && py.test tests
