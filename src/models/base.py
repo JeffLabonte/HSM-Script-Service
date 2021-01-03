@@ -18,6 +18,7 @@ sqlite_mutex = Lock()
 
 @contextmanager
 def get_session(auto_commit: bool = True) -> Session:
+    # TODO: Validate if SqlAlchemy doesn't deal with that already
     with sqlite_mutex:
         session = SessionFactory()
         try:
