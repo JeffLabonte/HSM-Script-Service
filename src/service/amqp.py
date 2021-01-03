@@ -1,10 +1,12 @@
 from pika import BlockingConnection, ConnectionParameters
 from pika.channel import Channel
 
+from service.base_service import BaseService
+
 from typing import Callable, Dict
 
 
-class AMQPService:
+class AMQPService(BaseService):
     def __init__(self, callback: Callable, host="broker", port=5672, exchange='script_topic'):
         self.connection = BlockingConnection(
             ConnectionParameters(host=host, port=port)
