@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
 
 from contextlib import contextmanager
@@ -18,7 +18,7 @@ sqlite_mutex = Lock()
 
 
 @contextmanager
-def get_session(auto_commit: bool = True):
+def get_session(auto_commit: bool = True) -> Session:
     with sqlite_mutex:
         session = SessionFactory()
         try:
