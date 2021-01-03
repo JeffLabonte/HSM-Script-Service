@@ -1,30 +1,29 @@
 import pika
 
+import logging
 
-TOPIC_TO_RECEIVE = 'script.#'
+from helper.amqp import get_payload_from_body
+
+logger = logging.getLogger('script_service')
+
+TOPIC_TO_CONSUME = 'script.#'
+
+TOPIC_TO_FUNCTION_MAPPING = {
+    'script.get': None,  # TODO Add function from controller
+    'script.get.by_attr': None,
+    'script.create': None,
+    'script.update.id.$': None,
+}
+
+
+def callback(ch, method, properties, body):
+    payload = get_payload_from_body(body)
+    print(f"ch: {ch}")
+    print(f"method: {method}")
+    print(f"properties: {properties}")
+    print(f"body: {body}")
 
 
 if __name__ == "__main__":
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='broker')
-    )
-
-    channel = connection.channel()
-    channel.exchange_declare(exchange='script_topic', exchange_type='topic')
-
-    result = channel.queue_declare('', exclusive=True)
-    queue_name = result.method.queue
-
-    channel.queue_bind(exchange='script_topic',
-                       queue=queue_name, routing_key=TOPIC_TO_RECEIVE)
-
-    def callback(ch, method, properties, body):
-        print("test")
-
-    channel.basic_consume(
-        queue=queue_name,
-        on_message_callback=callback,
-        auto_ack=True
-    )
-
-    channel.start_consuming()
+    # TODO Create messaging service, init service
+    pass
