@@ -23,8 +23,7 @@ def get_session(auto_commit: bool = True) -> Session:
         session = SessionFactory()
         try:
             yield session
-        except:
+        finally:
             if auto_commit:
                 session.commit()
-        finally:
             session.close()
