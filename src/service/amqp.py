@@ -25,7 +25,7 @@ class AMQPService(BaseService):
         return channel
 
     def _init_queue(self) -> str:
-        self.channel.queue_declare('', exclusive=True)
+        result = self.channel.queue_declare('', exclusive=True)
         return result.method.queue
 
     def _add_callback(self, callback: Callable) -> None:

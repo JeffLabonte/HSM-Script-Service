@@ -1,4 +1,4 @@
-import pika
+# import pika
 
 import logging
 
@@ -22,6 +22,7 @@ def callback(ch, method, properties, body):
     print(f"method: {method}")
     print(f"properties: {properties}")
     print(f"body: {body}")
+    print(payload)
 
 
 if __name__ == "__main__":
