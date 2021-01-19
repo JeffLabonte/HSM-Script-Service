@@ -1,0 +1,13 @@
+@startuml
+autonumber
+"Front-End Backend" -> AMQP: "Create, Get,\n Update, Delete Scripts"
+
+note left
+	Message are tracked
+	with a transaction ID
+	in the form of a UUID V4
+end note	
+AMQP -> "Script Service": "Carry Creation, Get,\n Update, Deletion of Scripts"
+"Script Service" -> AMQP: Return Result
+AMQP -> "Front-End Backend": Gets Result to return to Front-End
+@enduml
