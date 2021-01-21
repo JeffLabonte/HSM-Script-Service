@@ -1,0 +1,10 @@
+@startjson
+{
+	"method": "POST",
+	"transaction_id": "ec4f0485-2871-4dc3-81bf-b144c31c0472",
+	"data": {
+		"name": "script_name.sh",
+		"repo": "git@github.com/JeffLabonte/somerepo.git"
+	}
+}
+@endjson
