@@ -3,17 +3,18 @@ from pika.channel import Channel
 
 from service.base_service import BaseService
 
-from typing import Callable, Dict
+from typing import Callable, Dict, List
 
 
 class AMQPService(BaseService):
-    def __init__(self, callback: Callable, host="broker", port=5672, exchange='script_topic'):
+    def __init__(self, callback: Callable, routing_keys: List, host="broker", port=5672, exchange='script_topic'):
         self.connection = BlockingConnection(
             ConnectionParameters(host=host, port=port)
         )
         self.exchange = exchange
         self.channel = self._init_channel()
         self.queue_name = self._init_queue()
+        self._bind_routing_keys(routing_keys=routing_keys)
         self._add_callback(callback)
 
     def _init_channel(self) -> Channel:
@@ -27,6 +28,14 @@ class AMQPService(BaseService):
     def _init_queue(self) -> str:
         result = self.channel.queue_declare('', exclusive=True)
         return result.method.queue
+
+    def _bind_routing_keys(self, routing_keys: list) -> None:
+        for routing_key in routing_keys:
+            self.channel.queue_bind(
+                exchange=self.exchange,
+                queue=self.queue_name,
+                routing_key=routing_key,
+            )
 
     def _add_callback(self, callback: Callable) -> None:
         if not callable(callback):
