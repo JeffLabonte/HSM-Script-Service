@@ -1,9 +1,10 @@
+import json
+from typing import Callable, Dict, List
+
 from pika import BlockingConnection, ConnectionParameters
 from pika.channel import Channel
 
 from service.base_service import BaseService
-
-from typing import Callable, Dict, List
 
 
 class AMQPService(BaseService):
@@ -51,7 +52,7 @@ class AMQPService(BaseService):
         self.channel.basic_publish(
             exchange=self.exchange,
             routing_key=topic,
-            body=message,
+            body=json.dumps(message),
         )
 
     def start_consuming(self):
