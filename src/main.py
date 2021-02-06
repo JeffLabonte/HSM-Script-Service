@@ -3,10 +3,13 @@ from time import sleep
 from os import environ
 
 from helper.amqp import get_payload_from_body
+from service.amqp import AMQPService
 
 logger = logging.getLogger('script_service')
 
 TOPIC_TO_CONSUME = 'script.#'
+
+AMQP = None
 
 
 def get_environment(variable, default):
@@ -22,8 +25,15 @@ def callback(ch, method, properties, body):
     print(f"properties: {properties}")
     print(f"body: {body}")
     print(payload)
+    AMQP.publish(topic='script.create.response', message={"test": "test"})
 
 
 if __name__ == "__main__":
-    # TODO Create messaging service, init service
-    pass
+    broker_host = get_environment(variable="BROKER_HOST", default="broker")
+    AMQP = AMQPService(
+        callback,
+        host=broker_host,
+        routing_keys=['script.create']
+    )
+    print("Starting service")
+    AMQP.start_consuming()
