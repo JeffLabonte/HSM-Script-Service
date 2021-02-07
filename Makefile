@@ -27,3 +27,6 @@ unit_test:
 
 generate_doc:
 	plantuml docs/*puml && mv docs/*.png docs/generated/
+
+start_dev:
+	BROKER_HOST=localhost python src/main.py
